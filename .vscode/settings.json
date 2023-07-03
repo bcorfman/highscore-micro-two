@@ -5,7 +5,7 @@
     "python.linting.flake8Args": [
         "--max-line-length=88"
     ],
-    "python.formatting.provider": "black",
+    "python.formatting.provider": "yapf",
     "python.testing.pytestArgs": [
         "tests"
     ],

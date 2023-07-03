@@ -1,12 +1,16 @@
 [tool.poetry]
-name = "core"
+name = "highscore-micro-two"
 version = "0.1.0"
-description = ""
+description = "A FastAPI ASGI microservice to query/update a high score list."
 authors = ["Brandon Corfman <bcorfman@fastmail.fm>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.11"
+fastapi = "^0.99.1"
+uvicorn = "^0.22.0"
+sqlalchemy = "^2.0.17"
+psycopg2-binary = "^2.9.6"
 
 
 [tool.poetry.group.dev.dependencies]

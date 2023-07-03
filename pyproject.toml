@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "core"
+version = "0.1.0"
+description = ""
+authors = ["Brandon Corfman <bcorfman@fastmail.fm>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+
+[tool.poetry.group.dev.dependencies]
+ipython = "^8.14.0"
+pysnooper = "^1.1.1"
+flake8 = "^6.0.0"
+yapf = "^0.40.1"
+pytest = "^7.4.0"
+pytest-cov = "^4.1.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

@@ -9,8 +9,7 @@ uvicorn = {version = "*", extras = ["standard"]}
 httpx = "*"
 authlib = "*"
 itsdangerous = "*"
-sqlalchemy = "*"
-psycopg2-binary = "*"
+sqlmodel = "*"
 
 [dev-packages]
 ipython = "*"

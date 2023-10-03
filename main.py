@@ -13,15 +13,14 @@ app.add_middleware(SessionMiddleware,
 db_setup = DBSetup()
 
 
-@app.get("/high_scores")
-async def get_high_scores():
-    session = await db_setup.get_session()
+@app.get("/high_scores", response_model=list[HighScore])
+async def get_high_scores(session: AsyncSession = Depends(db_setup.get_session)):
     result = await session.execute(select(HighScore))
     high_scores = result.scalars().all()
     return [HighScore(initials=hs.initials, score=hs.score) for hs in high_scores]
 
 
-@app.put("/add_score")
+@app.put("/add_score", response_model=HighScore)
 async def add_score_to_list(high_score: HighScoreCreate,
                             session: AsyncSession = Depends(db_setup.get_session)):
     """ Add a new score with initials to a list of high scores,

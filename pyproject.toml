@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "highscore-micro-two"
 version = "0.1.0"
-description = "A FastAPI ASGI microservice to create/query a high score list using SQLAModel. Backend is a PostgreSQL database deployed on the ElephantSQL cloud."
+description = "A FastAPI ASGI microservice to create/query a high score list using SQLModel. Backend is a PostgreSQL database deployed on the ElephantSQL cloud."
 authors = ["Brandon Corfman <bcorfman@fastmail.fm>"]
 license = "MIT"
 readme = "README.md"

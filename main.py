@@ -1,5 +1,5 @@
 from fastapi import Depends, FastAPI
-from sqlmodel import delete, select
+from sqlalchemy import delete, select
 from sqlmodel.ext.asyncio.session import AsyncSession
 from starlette.middleware.sessions import SessionMiddleware
 

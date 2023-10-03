@@ -1,23 +1,24 @@
-from typing import Any, Dict, Tuple
-from sqlmodel import SQLModel, create_engine, Optional, Field
-from starlette.config import Config
+from sqlalchemy.orm import sessionmaker
+from sqlmodel import SQLModel, create_engine
+from sqlmodel.ext.asyncio.session import AsyncEngine, AsyncSession
+
+from core.config import starlette_config
 
 
-class HighScore(SQLModel, table=True):
-    id: Optional[int] = Field(default=None, primary_key=True)
-    initials: str
-    score: int
+class DBSetup:
+    def __init__(self):
+        self._database_url = starlette_config.get("ELEPHANTSQL_URL")
+        self.engine = AsyncEngine(create_engine(self._database_url, echo=True))
+        
+    async def _create_tables(self):
+        # creates tables if they don't exist already; otherwise, leaves them alone.
+        async with self.engine.begin() as conn:
+            await conn.run_sync(SQLModel.metadata.create_all)
 
-    def __init__(cls, classname: str, bases: Tuple[type, ...],
-                 dict_: Dict[str, Any], **kw: Any) -> None:
-        super().__init__(classname, bases, dict_, **kw)
-        cls._engine = None
-
-    def __repr__(self) -> str:
-        return f"HighScore(id={self.id!r}, initials={self.initials!r}, " + \
-               f"score={self.score!r})"
-
-    def create_engine(self):
-        starlette_config = Config("env.txt")
-        self.engine = create_engine(starlette_config.get("ELEPHANTSQL_URL"),
-                                    echo=True)
+    async def get_session(self) -> AsyncSession:
+        await self._create_tables()
+        async_session = sessionmaker(
+            self.engine, class_=AsyncSession, expire_on_commit=False
+        )
+        async with async_session() as session:
+            yield session

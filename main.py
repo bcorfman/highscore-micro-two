@@ -1,5 +1,5 @@
 from fastapi import Depends, FastAPI
-from sqlmodel import select
+from sqlmodel import delete, select
 from sqlmodel.ext.asyncio.session import AsyncSession
 from starlette.middleware.sessions import SessionMiddleware
 
@@ -13,15 +13,14 @@ app.add_middleware(SessionMiddleware,
 db_setup = DBSetup()
 
 
-@app.get("/high_scores")
-async def get_high_scores():
-    session = await db_setup.get_session()
+@app.get("/high_scores", response_model=list[HighScore])
+async def get_high_scores(session: AsyncSession = Depends(db_setup.get_session)):
     result = await session.execute(select(HighScore))
     high_scores = result.scalars().all()
     return [HighScore(initials=hs.initials, score=hs.score) for hs in high_scores]
 
 
-@app.put("/add_score")
+@app.post("/add_score", response_model=HighScore)
 async def add_score_to_list(high_score: HighScoreCreate,
                             session: AsyncSession = Depends(db_setup.get_session)):
     """ Add a new score with initials to a list of high scores,
@@ -34,11 +33,17 @@ async def add_score_to_list(high_score: HighScoreCreate,
                    score=high_score.score)
     session.add(hs)
     await session.commit()
-    await session.refresh()
+    await session.refresh(hs)
     return hs
 
 
 @app.post("/clear_scores")
 async def clear_high_score_list(session: AsyncSession = Depends(db_setup.get_session)):
-    session.delete(HighScore)
-    session.flush()
+    statement = delete(HighScore)
+    result = await session.execute(statement)
+    await session.commit()
+    result = await session.execute(select(HighScore))
+    high_scores = result.scalars().all()
+    return [
+        HighScore(initials=hs.initials, score=hs.score) for hs in high_scores
+    ]

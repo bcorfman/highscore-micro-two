@@ -15,6 +15,7 @@ jobs:
         uses: Qwerty-133/python-setup@v1
         with:
           python-version: ${{ matrix.python-version }}
+          skip-precommit: true
       - name: Install Platform.sh CLI
         run: |
           curl -fsSL https://raw.githubusercontent.com/platformsh/cli/main/installer.sh | bash

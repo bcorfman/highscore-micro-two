@@ -1,0 +1,30 @@
+name: Python build and test
+on: [push, pull_request]
+
+jobs:
+  build-test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        python-version: ["3.10"]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Python and Poetry
+        uses: Qwerty-133/python-setup@v1
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install Platform.sh CLI
+        run: |
+        curl -fsSL https://raw.githubusercontent.com/platformsh/cli/main/installer.sh | bash
+      - name: Install project (incl. dev) dependencies
+        run: |
+          poetry install
+      - name: Write env variables to env.txt file
+        run: |
+          touch .env
+          echo SECRET_KEY=${{ secrets.SECRET_KEY }} >> .env
+          echo ELEPHANTSQL_URL=${{ secrets.ELEPHANTSQL_URL }} >> .env
+      - name: Test with pytest
+        run: poetry run pytest

@@ -16,7 +16,7 @@ relationships:
     database: "highscoredb:postgresql"
 
 # The size of the persistent disk of the application (in MB). Minimum value is 128.
-disk: auto
+disk: 256
 # The web key configures the web server running in front of your app.
 # More information: https://docs.platform.sh/create-apps/app-reference.html#web
 web:

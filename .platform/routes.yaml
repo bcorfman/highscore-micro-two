@@ -1,0 +1,15 @@
+"https://{default}/docs":
+  type: upstream
+  upstream: "app:http"
+
+"https://{default}/add_score":
+  type: upstream
+  upstream: "app:http"
+
+"https://{default}/high_scores":
+  type: upstream
+  upstream: "app:http"
+
+"https://{default}/clear_scores":
+  type: upstream
+  upstream: "app:http"

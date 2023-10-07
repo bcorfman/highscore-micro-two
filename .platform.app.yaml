@@ -24,7 +24,8 @@ web:
     # More information: https://docs.platform.sh/create-apps/app-reference.html#web-commands
     commands:
         # The command to launch your app. If it terminates, it’s restarted immediately.
-        start: "poetry run python main.py"
+        start: |
+            "poetry run uvicorn main:app"
 
 # Installs global dependencies as part of the build process. They’re independent of your app’s dependencies and
 # are available in the PATH during the build process and in the runtime environment. They’re installed before

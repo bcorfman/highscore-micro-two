@@ -1,6 +1,6 @@
 "https://{default}/":
   type: upstream
-  upstream: "app:http"
+  upstream: "highscore:http"
 
 "https://www.{default}/":
   type: redirect

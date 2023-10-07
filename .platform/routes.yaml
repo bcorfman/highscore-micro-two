@@ -1,4 +1,4 @@
-"https://{default}/docs":
+"https://{default}":
   type: upstream
   upstream: "app:http"
 

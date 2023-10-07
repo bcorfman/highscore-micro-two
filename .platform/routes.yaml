@@ -1,7 +1,15 @@
-"https://{default}/":
+"https://{default}/docs":
   type: upstream
   upstream: "highscore:http"
 
-"https://www.{default}/":
-  type: redirect
-  to: "https://{default}/"
+"https://{default}/clear_scores":
+  type: upstream
+  upstream: "highscore:http"
+
+"https://{default}/high_scores":
+  type: upstream
+  upstream: "highscore:http"
+
+"https://{default}/add_score":
+  type: upstream
+  upstream: "highscore:http"

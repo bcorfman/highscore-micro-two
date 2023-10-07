@@ -22,7 +22,6 @@ disk: 256
 web:
     # Commands are run once after deployment to start the application process.
     # More information: https://docs.platform.sh/create-apps/app-reference.html#web-commands
-    socket_family: unix
     commands:
         # The command to launch your app. If it terminates, it’s restarted immediately.
         start: "poetry run gunicorn main:app --workers 4 --worker-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:80"

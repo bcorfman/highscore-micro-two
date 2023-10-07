@@ -25,7 +25,7 @@ web:
     commands:
         # The command to launch your app. If it terminates, it’s restarted immediately.
         start: |
-            "poetry run uvicorn main:app"
+            "poetry run uvicorn main:app host='0.0.0.0'"
 
 # Installs global dependencies as part of the build process. They’re independent of your app’s dependencies and
 # are available in the PATH during the build process and in the runtime environment. They’re installed before

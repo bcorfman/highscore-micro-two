@@ -10,4 +10,4 @@ RUN poetry install
 COPY ./main.py /code/main.py
 COPY ./core /code/core
 
-CMD ["poetry", "run", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "80"]
+CMD ["poetry", "run", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "443"]

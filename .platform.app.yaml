@@ -24,7 +24,7 @@ web:
     # More information: https://docs.platform.sh/create-apps/app-reference.html#web-commands
     commands:
         # The command to launch your app. If it terminates, it’s restarted immediately.
-        start: "poetry run gunicorn main:app --workers 4 --worker-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:80"
+        start: "poetry run gunicorn main:app --workers 4 --worker-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:443"
     locations:
         "/":
             # Forward resources to the app.

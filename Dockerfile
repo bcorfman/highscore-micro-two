@@ -1,5 +1,4 @@
-FROM python:3.10
-#geopraevent/python-poetry:1.6.1-python3.10-bullseye
+FROM geopraevent/python-poetry:1.6.1-python3.10-bullseye
 
 WORKDIR /code
 

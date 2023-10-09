@@ -1,9 +1,11 @@
-FROM geopraevent/python-poetry:1.6.1-python3.10-bullseye
+FROM python:3.10
+#geopraevent/python-poetry:1.6.1-python3.10-bullseye
 
 WORKDIR /code
 
 COPY ./pyproject.toml /code/pyproject.toml
 
+RUN pip install poetry
 RUN poetry install
 
 COPY ./main.py /code/main.py

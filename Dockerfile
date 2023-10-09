@@ -1,14 +1,12 @@
 FROM geopraevent/python-poetry:1.6.1-python3.10-bullseye
 
-WORKDIR /code
-
 COPY ./pyproject.toml /code/pyproject.toml
 
 RUN pip install poetry
 RUN poetry install
 
-COPY ./main.py /code/main.py
-COPY ./core /code/core
+COPY ./main.py main.py
+COPY ./core /core
 
 EXPOSE 80
 EXPOSE 443

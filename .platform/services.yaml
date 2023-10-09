@@ -1,3 +1,0 @@
-highscoredb:
-    type: postgresql:15
-    disk: 100

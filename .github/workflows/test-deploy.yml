@@ -16,9 +16,6 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
           skip-pre-commit: true
-      - name: Install Platform.sh CLI
-        run: |
-          curl -fsSL https://raw.githubusercontent.com/platformsh/cli/main/installer.sh | bash
       - name: Install project (incl. dev) dependencies
         run: |
           poetry install

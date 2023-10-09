@@ -1,4 +1,4 @@
-name: Python build and test
+name: Python test and deploy
 on: [push, pull_request]
 
 jobs:

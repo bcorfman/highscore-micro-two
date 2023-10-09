@@ -13,9 +13,11 @@ app.add_middleware(SessionMiddleware,
 db_setup = DBSetup()
 
 
+# remember to check for this on platform.sh as basic test
 @app.get("/")
 def read_root():
     return {"Hello": "World"}
+
 
 @app.get("/high_scores", response_model=list[HighScore])
 async def get_high_scores(session: AsyncSession = Depends(db_setup.get_session)):

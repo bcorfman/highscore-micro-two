@@ -13,6 +13,7 @@ app.add_middleware(SessionMiddleware,
 db_setup = DBSetup()
 
 
+# remember to check for this on platform.sh as basic test
 @app.get("/")
 def read_root():
     return {"Hello": "World"}

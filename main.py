@@ -13,30 +13,28 @@ app.add_middleware(SessionMiddleware,
 db_setup = DBSetup()
 
 
-# remember to check for this on platform.sh as basic test
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
-
-
 @app.get("/high_scores", response_model=list[HighScore])
-async def get_high_scores(session: AsyncSession = Depends(db_setup.get_session)):
+async def get_high_scores(session: AsyncSession = Depends(
+    db_setup.get_session)):
     result = await session.execute(select(HighScore))
     high_scores = result.scalars().all()
-    return [HighScore(initials=hs.initials, score=hs.score) for hs in high_scores]
+    return [
+        HighScore(initials=hs.initials, score=hs.score) for hs in high_scores
+    ]
 
 
-@app.post("/add_score", response_model=HighScore)
-async def add_score_to_list(high_score: HighScoreCreate,
-                            session: AsyncSession = Depends(db_setup.get_session)):
+@app.post("/add_score", response_model=HighScoreCreate)
+async def add_score_to_list(initials: str,
+                            high_score: int,
+                            session: AsyncSession = Depends(
+                                db_setup.get_session)):
     """ Add a new score with initials to a list of high scores,
     sort the list in descending order, and keep only the top 10
     scores in the database.
     Inputs:
     - initials: a string representing the initials of the player who achieved the score.
     - score: an integer representing the score achieved by the player. """
-    hs = HighScore(initials=high_score.initials[:3].upper(),
-                   score=high_score.score)
+    hs = HighScore(initials=initials[:3].upper(), score=high_score)
     session.add(hs)
     await session.commit()
     await session.refresh(hs)
@@ -44,7 +42,8 @@ async def add_score_to_list(high_score: HighScoreCreate,
 
 
 @app.post("/clear_scores")
-async def clear_high_score_list(session: AsyncSession = Depends(db_setup.get_session)):
+async def clear_high_score_list(session: AsyncSession = Depends(
+    db_setup.get_session)):
     statement = delete(HighScore)
     result = await session.execute(statement)
     await session.commit()

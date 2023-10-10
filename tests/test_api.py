@@ -8,6 +8,7 @@ def test_add_score(client: TestClient) -> None:
     assert high_score['initials'] == 'BCC'
     assert high_score['score'] == 50000
     response = client.post("/add_score?initials=DMC&score=60000")
+    assert response.status_code == 200
     response = client.post("/clear_scores")
     assert response.status_code == 200
     response = client.get("/high_scores")

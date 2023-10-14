@@ -23,7 +23,7 @@ async def get_high_scores(session: AsyncSession = Depends(
     ]
 
 
-@app.post("/add_score", response_model=HighScoreCreate)
+@app.post("/add_score")
 async def add_score_to_list(initials: str,
                             high_score: int,
                             session: AsyncSession = Depends(
@@ -35,7 +35,8 @@ async def add_score_to_list(initials: str,
     - initials: a string representing the initials of the player who achieved the score.
     - score: an integer representing the score achieved by the player. """
     hs = HighScore(initials=initials.upper(), score=high_score)
-    await session.add(hs)
+    print("High Score")
+    session.add(hs)
     await session.commit()
     await session.refresh(hs)
     return hs

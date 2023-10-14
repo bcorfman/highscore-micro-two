@@ -19,7 +19,8 @@ async def get_high_scores(session: AsyncSession = Depends(
     result = await session.execute(select(HighScore))
     high_scores = result.scalars().all()
     return [
-        HighScore(initials=hs.initials, score=hs.score) for hs in high_scores
+        HighScore(initials=hs.initials, score=hs.score, id=hs.id)
+        for hs in high_scores
     ]
 
 

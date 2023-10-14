@@ -2,6 +2,7 @@ from fastapi.testclient import TestClient
 
 
 def test_add_score(client: TestClient) -> None:
+    # add two scores to DB
     response = client.post("/add_score?initials=BCC&score=50000")
     assert response.status_code == 200
     high_score = response.json()
@@ -9,6 +10,13 @@ def test_add_score(client: TestClient) -> None:
     assert high_score['score'] == 50000
     response = client.post("/add_score?initials=DMC&score=60000")
     assert response.status_code == 200
+    # query scores and make sure all IDs in each table row are non-null.
+    response = client.get("/high_scores")
+    assert response.status_code == 200
+    content = response.json()
+    for entry in content:
+        assert entry['id'] is not None
+    # clear high scores, then make sure they are actually cleared.
     response = client.post("/clear_scores")
     assert response.status_code == 200
     response = client.get("/high_scores")

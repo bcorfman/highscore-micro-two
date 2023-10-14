@@ -18,13 +18,10 @@ async def get_high_scores(session: AsyncSession = Depends(
     db_setup.get_session)):
     result = await session.execute(select(HighScore))
     high_scores = result.scalars().all()
-    return [
-        HighScore(initials=hs.initials, score=hs.score, id=hs.id)
-        for hs in high_scores
-    ]
+    return high_scores
 
 
-@app.post("/add_score")
+@app.post("/add_score", response_model=HighScore)
 async def add_score_to_list(initials: str,
                             score: int,
                             session: AsyncSession = Depends(

@@ -15,7 +15,7 @@ def test_add_score(client: TestClient) -> None:
     assert response.status_code == 200
     content = response.json()
     for entry in content:
-        assert entry.id is not None
+        assert entry['id'] is not None
     # clear high scores, then make sure they are actually cleared.
     response = client.post("/clear_scores")
     assert response.status_code == 200

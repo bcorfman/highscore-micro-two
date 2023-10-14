@@ -34,8 +34,8 @@ async def add_score_to_list(initials: str,
     Inputs:
     - initials: a string representing the initials of the player who achieved the score.
     - score: an integer representing the score achieved by the player. """
-    hs = HighScore(initials=initials[:3].upper(), score=high_score)
-    session.add(hs)
+    hs = HighScore(initials=initials.upper(), score=high_score)
+    await session.add(hs)
     await session.commit()
     await session.refresh(hs)
     return hs

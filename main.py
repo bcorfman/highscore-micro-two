@@ -16,7 +16,8 @@ db_setup = DBSetup()
 @app.get("/high_scores", response_model=list[HighScore])
 async def get_high_scores(session: AsyncSession = Depends(
     db_setup.get_session)):
-    result = await session.execute(select(HighScore))
+    result = await session.execute(
+        select(HighScore).order_by(HighScore.score.desc()))
     high_scores = result.scalars().all()
     return high_scores
 
@@ -32,11 +33,23 @@ async def add_score_to_list(initials: str,
     Inputs:
     - initials: a string representing the initials of the player who achieved the score.
     - score: an integer representing the score achieved by the player. """
-    hs = HighScore(initials=initials.upper(), score=score)
-    session.add(hs)
-    await session.commit()
-    await session.refresh(hs)
-    return hs
+    if len(initials) > 0 and score >= 0:
+        high_scores = await get_high_scores(session)
+        new_scores = []
+        if high_scores:
+            for item in high_scores:
+                new_scores.append((item.score, item.initials))
+        new_scores.append((score, initials[:3].upper()))
+        new_scores.sort(reverse=True)
+        await clear_high_score_list()
+        score_lst = [
+            HighScore(initials=item[1], score=item[0])
+            for item in new_scores[:10]
+        ]
+        session.add_all(score_lst)
+        await session.commit()
+        await session.refresh(score_lst)
+    return await get_high_scores(session)
 
 
 @app.post("/clear_scores")

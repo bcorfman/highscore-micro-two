@@ -5,7 +5,7 @@ from starlette.middleware.sessions import SessionMiddleware
 
 from core.config import starlette_config
 from core.db import DBSetup
-from core.models import HighScore, HighScoreCreate
+from core.models import HighScore, HighScoreBase
 
 app = FastAPI()
 app.add_middleware(SessionMiddleware,
@@ -13,12 +13,13 @@ app.add_middleware(SessionMiddleware,
 db_setup = DBSetup()
 
 
-@app.get("/high_scores", response_model=list[HighScore])
+@app.get("/high_scores", response_model=list[HighScoreBase])
 async def get_high_scores(session: AsyncSession = Depends(
     db_setup.get_session)):
     result = await session.execute(
-        select(HighScore).order_by(HighScore.score.desc()))
-    high_scores = result.scalars().all()
+        select(HighScore.initials,
+               HighScore.score).order_by(HighScore.score.desc()))
+    high_scores = result.all()
     return high_scores
 
 
@@ -33,33 +34,34 @@ async def add_score_to_list(initials: str,
     Inputs:
     - initials: a string representing the initials of the player who achieved the score.
     - score: an integer representing the score achieved by the player. """
+    hs = None
     if len(initials) > 0 and score >= 0:
-        high_scores = await get_high_scores(session)
-        new_scores = []
-        if high_scores:
-            for item in high_scores:
-                new_scores.append((item.score, item.initials))
-        new_scores.append((score, initials[:3].upper()))
-        new_scores.sort(reverse=True)
-        await clear_high_score_list()
-        score_lst = [
-            HighScore(initials=item[1], score=item[0])
-            for item in new_scores[:10]
-        ]
-        session.add_all(score_lst)
+        result = await session.execute(select(HighScore))
+        total_rows = len(result.all())
+        hs = HighScore(initials=initials[:3].upper(), score=score)
+        session.add(hs)
         await session.commit()
-        await session.refresh(score_lst)
-    return await get_high_scores(session)
+        await session.refresh(hs)
+        if total_rows >= 10:
+            ids = await session.execute(
+                select(HighScore.id).order_by(
+                    HighScore.score.desc()).offset(9).limit(1))
+            last_id = ids.all()[0][0]
+            await session.execute(
+                delete(HighScore).where(HighScore.id < last_id))
+            await session.commit()
+    return hs
 
 
-@app.post("/clear_scores")
+@app.post("/clear_scores", response_model=list[HighScoreBase])
 async def clear_high_score_list(session: AsyncSession = Depends(
     db_setup.get_session)):
     statement = delete(HighScore)
     result = await session.execute(statement)
     await session.commit()
     result = await session.execute(select(HighScore))
-    high_scores = result.scalars().all()
+    high_scores = result.all()
     return [
-        HighScore(initials=hs.initials, score=hs.score) for hs in high_scores
+        HighScoreBase(initials=hs.initials, score=hs.score)
+        for hs in high_scores
     ]

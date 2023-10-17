@@ -10,7 +10,8 @@ class DBSetup:
 
     def __init__(self):
         self._database_url = starlette_config.get("ELEPHANTSQL_URL")
-        self.engine = AsyncEngine(create_engine(self._database_url, echo=True))
+        self.engine = AsyncEngine(create_engine(self._database_url,
+                                                echo=False))
 
     async def _create_tables(self):
         # creates tables if they don't exist already; otherwise, leaves them alone.

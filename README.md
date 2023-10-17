@@ -41,7 +41,7 @@ OR
 
 ## Deployment
 
-- By default, Back4App will deploy your containerized microservice to its cloud each time you do a `git push` to your `main` branch.
+- If you follow the *How to set up your own version* instructions above, Back4App will deploy your containerized microservice to its cloud each time you do a `git push` to your `main` branch.
 - Any app built using FastAPI also has a default /docs page that allows you to interact with your published web API. For example, my original HighScore microservice has its own docs page [here](https://highscore-ibq0itxr.b4a.run/docs). You will need to find the link to your own container on your Back4App dashboard; make sure you add the /docs suffix onto the end of your URL to bring up the page correctly.
-- If you set both environment variables correctly in the "How to set up your own version" instructions above, your microservice will connect to the ElephantSQL cloud and read/write from the PostgreSQL database there. If something goes wrong, make sure you've checked the connection URLs for correctness.  
+- If you set both environment variables correctly in the *How to set up your own version* instructions above, your microservice will connect to the ElephantSQL cloud and read/write from the PostgreSQL database there. If something goes wrong, make sure you've checked the connection URLs for correctness.  
 - Check out (or fork) my Anvil-based app for a web frontend that provides a better user experience for the database microservice.

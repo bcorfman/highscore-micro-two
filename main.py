@@ -43,12 +43,12 @@ async def add_score_to_list(initials: str,
         await session.commit()
         await session.refresh(hs)
         if total_rows >= 10:
-            ids = await session.execute(
-                select(HighScore.id).order_by(
+            rows = await session.execute(
+                select(HighScore.score).order_by(
                     HighScore.score.desc()).offset(9).limit(1))
-            last_id = ids.all()[0][0]
+            last_score = rows.all()[0][0]
             await session.execute(
-                delete(HighScore).where(HighScore.id < last_id))
+                delete(HighScore).where(HighScore.score < last_score))
             await session.commit()
     return hs
 

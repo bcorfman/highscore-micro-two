@@ -7,6 +7,7 @@ from core.config import starlette_config
 
 
 class DBSetup:
+
     def __init__(self):
         self._database_url = starlette_config.get("ELEPHANTSQL_URL")
         self.engine = AsyncEngine(create_engine(self._database_url, echo=True))
@@ -18,8 +19,8 @@ class DBSetup:
 
     async def get_session(self) -> AsyncSession:
         await self._create_tables()
-        async_session = sessionmaker(
-            self.engine, class_=AsyncSession, expire_on_commit=False
-        )
+        async_session = sessionmaker(self.engine,
+                                     class_=AsyncSession,
+                                     expire_on_commit=False)
         async with async_session() as session:
             yield session

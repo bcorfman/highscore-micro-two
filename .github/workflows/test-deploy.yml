@@ -22,7 +22,6 @@ jobs:
       - name: Write env variables to env.txt file
         run: |
           touch .env
-          echo SECRET_KEY=${{ secrets.SECRET_KEY }} >> .env
           echo ELEPHANTSQL_URL=${{ secrets.ELEPHANTSQL_URL }} >> .env
       - name: Test with pytest
         run: poetry run pytest

@@ -39,6 +39,10 @@ OR
 - Install [Poetry](https://python-poetry.org/)
 - At a command prompt in the project directory, type `poetry install` to set up the project dependencies.
 
+Also important:
+- To run Pytest locally, the FastAPI setup code in main.py looks for a .env file in your project directory. This file will need to contain a single line, which is the same ELEPHANTSQL_URL environment variable as defined in the final part of step 1 under "How to set up your own version" above, e.g.
+`ELEPHANTSQL_URL=postgresql+asyncpg://{username}:{password}@{your_prefix_here}.db.elephantsql.com/{username}`
+
 ## Deployment
 
 - If you follow the *How to set up your own version* instructions above, Back4App will deploy your containerized microservice to its cloud each time you do a `git push` to your `main` branch.

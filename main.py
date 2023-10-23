@@ -6,10 +6,10 @@ from starlette.middleware.sessions import SessionMiddleware
 from core.config import starlette_config
 from core.db import DBSetup
 from core.models import HighScore, HighScoreBase
+import uuid
 
 app = FastAPI()
-app.add_middleware(SessionMiddleware,
-                   secret_key=starlette_config.get('SECRET_KEY'))
+app.add_middleware(SessionMiddleware, secret_key=uuid.uuid4())
 db_setup = DBSetup()
 
 

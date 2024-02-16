@@ -1,0 +1,10 @@
+{
+    "hostRequirements": {
+        "cpus": 2,
+        "memory": "4gb",
+        "storage": "32gb"
+    },
+    "name": "Python 3.10",
+    "image": "mcr.microsoft.com/devcontainers/python:3.10",
+    "postCreateCommand": "bash ./.devcontainer/post-install.sh "
+}

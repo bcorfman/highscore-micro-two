@@ -19,4 +19,4 @@ jobs:
           touch .env
           echo ELEPHANTSQL_URL=${{ secrets.ELEPHANTSQL_URL }} >> .env
       - name: Test with pytest
-        run: rye run pytest
+        run: make test

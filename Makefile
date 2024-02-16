@@ -23,4 +23,4 @@ format:
 run:
 	$(HOME)/.rye/shims/rye run main
 	
-all: install-dev lint test
+all: devinstall lint test

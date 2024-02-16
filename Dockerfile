@@ -6,7 +6,7 @@ RUN apt update && \
     rm -rf /var/lib/apt/lists/*
 
 ARG USERNAME=ryeuser
-RUN useradd ${USERNAME} --create-home
+RUN useradd -ms /bin/bash ${USERNAME} --create-home
 USER ${USERNAME}
 WORKDIR /home/${USERNAME}/highscore-micro-two
 COPY --chmod=+w .python-version .python_version

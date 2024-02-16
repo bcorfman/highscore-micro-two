@@ -21,7 +21,7 @@ I'm using this project to practice simple microservice design with Python.
     - On the resulting Details page, copy the connection URL to the clipboard.
     - Finally, make sure your system tests work correctly! In your forked repo on GitHub: find and click your Settings tab, then, on the left sidebar, expand the Secrets and Variables menu, and click Actions. Click the "New repository secret" button, type in ELEPHANTSQL_URL as the name, paste your connection URL into the "Secret" text box, and change the first part of the connection URL to read postgresql+asyncpg:// instead of postgres://
 2. Create a Back4App account and use their "Container as a Service" feature to deploy a database API microservice.
-    - Visit the [Back4App website] and sign up for a free account.
+    - Visit the [Back4App website](https://www.back4app.com/) and sign up for a free account.
     - At their opening menu, choose Back4App's "Container as a Service" feature.
     - Point to your forked highscore-micro-two repo on GitHub via their "Import GitHub repo" button. NOTE: You will need to give permission to GitHub to install and use "Back4App Containers" during this process.
     - Under the "Configure your initial deployment" settings, choose an App Name (I named mine "highscore") and, under the "Build and Deploy" menu, assign your Port as 443. NOTE: Back4App will automatically handle the configuration of certificates needed for Secure HTTP to work with your container.)
@@ -30,14 +30,8 @@ I'm using this project to practice simple microservice design with Python.
 
 ## Project startup
 
-- Click on the *Open with GitHub Codespaces* badge above to launch the project in a browser or on your desktop inside Visual Studio Code.
-
-OR
-
 - Clone the project to your system
-- Install [Python](https://www.python.org) 3.10 or higher
-- Install [Poetry](https://python-poetry.org/)
-- At a command prompt in the project directory, type `poetry install` to set up the project dependencies.
+- At a command prompt in the project directory, type `make devinstall` to set up the project dependencies.
 
 Also important:
 - To run Pytest locally, the FastAPI setup code in main.py looks for a .env file in your project directory. This file will need to contain a single line, which is the same ELEPHANTSQL_URL environment variable as defined in the final part of step 1 under "How to set up your own version" above, e.g.

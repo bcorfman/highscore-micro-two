@@ -16,7 +16,6 @@ ENV PATH="${RYE_HOME}/shims:${PATH}"
 
 COPY . .
 
-RUN cat Makefile
 RUN make install
 
 ENTRYPOINT ["rye", "run", "main.py"]

@@ -10,7 +10,7 @@ jobs:
         os: [ubuntu-latest]
         python-version: ["3.10"]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Install project (incl. dev) dependencies
         run: |
           make devinstall

@@ -1,14 +1,22 @@
-FROM geopraevent/python-poetry:1.6.1-python3.10-bullseye
+FROM python:3.10-slim-bookworm as prod
 
-COPY ./pyproject.toml /pyproject.toml
+RUN apt update && \
+    apt install -y make curl && \
+    apt clean && \
+    rm -rf /var/lib/apt/lists/*
 
-RUN pip install poetry
-RUN poetry install
+ARG USERNAME=ryeuser
+RUN useradd ${USERNAME} --create-home
+USER ${USERNAME}
+WORKDIR /home/${USERNAME}/highscore-micro-two
+COPY --chmod=+w .python-version .python_version
 
-COPY ./main.py /main.py
-COPY ./core /core
+ENV RYE_HOME /home/${USERNAME}/.rye
+ENV PATH="${RYE_HOME}/shims:${PATH}"
 
-EXPOSE 80
-EXPOSE 443
+COPY . .
 
-CMD ["poetry", "run", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "443"]
+RUN cat Makefile
+RUN make install
+
+ENTRYPOINT ["rye", "run", "main.py"]

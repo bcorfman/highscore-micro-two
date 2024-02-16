@@ -15,6 +15,7 @@ ENV RYE_HOME /home/${USERNAME}/.rye
 ENV PATH="${RYE_HOME}/shims:${PATH}"
 
 COPY . .
+
 RUN make devinstall
 
 ENTRYPOINT ["rye", "run", "main.py"]

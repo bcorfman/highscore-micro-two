@@ -10,6 +10,6 @@ RUN useradd -ms /bin/bash ${USERNAME} --create-home
 USER ${USERNAME}
 WORKDIR /home/${USERNAME}/highscore-micro-two
 COPY . .
-RUN pip install -r requirments.lock
+RUN pip install -r requirements.lock
 
 ENTRYPOINT ["rye", "run", "main.py"]

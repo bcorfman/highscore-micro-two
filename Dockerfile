@@ -11,6 +11,7 @@ USER ${USERNAME}
 WORKDIR /home/${USERNAME}/highscore-micro-two
 ENV PATH="/home/${USERNAME}/.local/bin:${PATH}"
 COPY . .
+RUN pip install --upgrade pip
 RUN pip install -r requirements.lock
 
 ENTRYPOINT ["rye", "run", "main.py"]

@@ -10,6 +10,7 @@ RUN useradd -ms /bin/bash ${USERNAME} --create-home
 USER ${USERNAME}
 WORKDIR /home/${USERNAME}/highscore-micro-two
 COPY . .
+ENV PATH=/home/${USERNAME}/.local/bin:$(PATH)
 RUN pip install -r requirements.lock
 
 ENTRYPOINT ["rye", "run", "main.py"]

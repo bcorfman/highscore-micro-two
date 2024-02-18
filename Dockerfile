@@ -16,4 +16,4 @@ RUN pip install -r requirements.lock
 
 EXPOSE 80
 EXPOSE 443
-ENTRYPOINT ["python", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "443"]
+ENTRYPOINT ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "443"]

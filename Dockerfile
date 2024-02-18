@@ -14,4 +14,6 @@ COPY . .
 RUN pip install --upgrade pip
 RUN pip install -r requirements-dev.lock
 
-ENTRYPOINT ["pytest"]
+EXPOSE 80
+EXPOSE 443
+ENTRYPOINT ["python", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "443"]

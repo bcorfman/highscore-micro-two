@@ -8,9 +8,8 @@ install:
 
 devinstall:
 	curl -sSf https://rye-up.com/get | RYE_NO_AUTO_INSTALL=1 RYE_INSTALL_OPTION="--yes" bash
-	export PATH=$(HOME)/.rye/shims:$(PATH)
-	rye pin $(PYTHON_VERSION)
-	rye sync
+	$(HOME)/.rye/shims/rye pin $(PYTHON_VERSION)
+	$(HOME)/.rye/shims/rye sync --no-lock
 
 test:
 	$(HOME)/.rye/shims/rye run pytest tests/

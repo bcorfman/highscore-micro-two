@@ -15,12 +15,9 @@ test:
 	$(HOME)/.rye/shims/rye run pytest tests/
 
 lint:
-	$(HOME)/.rye/shims/rye run pylint ./game 
+	$(HOME)/.rye/shims/rye lint --fix 
 
 format:
-	$(HOME)/.rye/shims/rye run yapf --in-place --recursive main.py ./tests ./game
+	$(HOME)/.rye/shims/rye fmt
 
-run:
-	$(HOME)/.rye/shims/rye run main
-	
-all: devinstall lint test
+all: devinstall lint format test
